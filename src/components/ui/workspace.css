@@ -449,19 +449,23 @@
 }
 .demo-room-info {
   position: relative;
+  min-width: 0;
+  max-width: 100%;
+}
+.demo-room-info[open] {
+  flex-basis: 100%;
 }
 .demo-room-info summary {
-  min-height: 28px;
-  padding-block: 2px;
+  min-height: 44px;
+  padding-block: 10px;
   font-size: 0.78rem;
   font-weight: 400;
 }
 .demo-room-info p {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  z-index: 12;
-  width: 260px;
+  position: static;
+  width: 100%;
+  margin: 8px 0 0;
+  overflow-wrap: anywhere;
   padding: 16px;
   background: #fff;
   border: 1px solid var(--d-line);
