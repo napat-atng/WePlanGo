@@ -24,25 +24,29 @@ declare
 begin
   perform set_config('request.jwt.claim.sub', '00000000-0000-0000-0000-0000000000a1', true);
   begin
-    update public.trip_participants set invitation_status = 'declined'
-      where trip_id = '00000000-0000-0000-0000-000000000222'
-        and user_id = '00000000-0000-0000-0000-0000000000a1';
-    raise exception 'organizer declined own trip';
+    perform public.respond_to_trip_invitation('00000000-0000-0000-0000-000000000222','declined');
+    -- RLS may reject with an exception or filter the UPDATE to zero rows.
+    if exists(select 1 from public.trip_participants
+      where trip_id='00000000-0000-0000-0000-000000000222'
+        and user_id='00000000-0000-0000-0000-0000000000a1'
+        and invitation_status='declined') then
+      raise exception 'organizer declined own trip';
+    end if;
   exception when insufficient_privilege then null;
   end;
   insert into public.trip_participants (trip_id, user_id, invitation_status) values
     ('00000000-0000-0000-0000-000000000222', '00000000-0000-0000-0000-0000000000b2', 'pending');
 
   perform set_config('request.jwt.claim.sub', '00000000-0000-0000-0000-0000000000b2', true);
-  update public.trip_participants set invitation_status = 'declined'
-    where trip_id = '00000000-0000-0000-0000-000000000222'
-      and user_id = '00000000-0000-0000-0000-0000000000b2';
-  get diagnostics changed_count = row_count;
+  perform public.respond_to_trip_invitation('00000000-0000-0000-0000-000000000222','declined');
+  select count(*) into changed_count from public.trip_participants
+    where trip_id='00000000-0000-0000-0000-000000000222'
+      and user_id='00000000-0000-0000-0000-0000000000b2' and invitation_status='declined';
   if changed_count <> 1 then raise exception 'invitee could not decline'; end if;
-  update public.trip_participants set invitation_status = 'interested'
-    where trip_id = '00000000-0000-0000-0000-000000000222'
-      and user_id = '00000000-0000-0000-0000-0000000000b2';
-  get diagnostics changed_count = row_count;
+  perform public.respond_to_trip_invitation('00000000-0000-0000-0000-000000000222','interested');
+  select count(*) into changed_count from public.trip_participants
+    where trip_id='00000000-0000-0000-0000-000000000222'
+      and user_id='00000000-0000-0000-0000-0000000000b2' and invitation_status='interested';
   if changed_count <> 1 then raise exception 'invitee could not rejoin'; end if;
 
   perform set_config('request.jwt.claim.sub', '00000000-0000-0000-0000-0000000000c3', true);

@@ -1,0 +1,141 @@
+.workspace-live .demo-brand,
+.workspace-live .demo-header nav a,
+.workspace-live .workspace-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  border: 1px solid #bdcce1;
+  border-radius: 10px;
+  background: #fff;
+  color: var(--d-ink);
+  padding: 10px 16px;
+  font-weight: 600;
+  text-decoration: none;
+}
+.workspace-live .demo-brand {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  font-size: 1.3rem;
+}
+.workspace-live .demo-header nav a {
+  background: transparent;
+  border-color: transparent;
+  font-size: 0.88rem;
+}
+.workspace-live .demo-header nav a[aria-current="page"] {
+  color: var(--d-primary);
+  background: #e6efff;
+}
+.workspace-live .workspace-button.demo-primary {
+  background: var(--d-primary);
+  color: white;
+  border-color: var(--d-primary);
+}
+.workspace-live a:hover {
+  text-decoration: none;
+  color: var(--d-primary);
+}
+.workspace-live a.workspace-button.demo-primary:hover {
+  background: #1748bc;
+  color: white;
+}
+.workspace-live .demo-trip-card {
+  display: block;
+  background: white;
+  text-decoration: none;
+  overflow: hidden;
+  border-radius: 18px;
+  margin-bottom: 20px;
+  color: var(--d-ink);
+}
+.workspace-live .demo-back {
+  display: inline-block;
+  text-decoration: none;
+  padding: 10px 0;
+}
+.workspace-progress {
+  max-width: 880px;
+  margin: 0 auto 12px !important;
+  font-size: 0.8rem;
+}
+.workspace-saving {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 10px 18px;
+  background: #eaf0ff;
+  border: 1px solid #c8d9ff;
+  border-radius: 10px;
+  z-index: 40;
+  font-size: 0.8rem;
+}
+.workspace-live .demo-footer form {
+  margin: 0;
+}
+.workspace-live .demo-invite label {
+  margin: 16px 0;
+}
+.workspace-live .demo-profile-grid aside > label {
+  margin-top: 18px;
+}
+.workspace-live .workspace-chat {
+  display: none;
+}
+.workspace-live .workspace-chat[data-active="true"] {
+  display: block;
+}
+@media (min-width: 1100px) {
+  .workspace-live .demo-focused-workspace {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 340px;
+    align-items: start;
+    gap: 24px;
+    max-width: none;
+  }
+  .workspace-live .workspace-chat {
+    display: block;
+    position: sticky;
+    top: 20px;
+    padding: 24px;
+    min-width: 0;
+  }
+  .workspace-live .workspace-chat .demo-messages {
+    max-height: 420px;
+    overflow-y: auto;
+    overflow-wrap: anywhere;
+  }
+  .workspace-live .workspace-chat[data-active="true"] {
+    grid-column: 1 / -1;
+    width: 880px;
+    max-width: 100%;
+    justify-self: center;
+  }
+}
+@media (max-width: 600px) {
+  .workspace-live .demo-brand {
+    font-size: 1.03rem;
+  }
+  .workspace-live .demo-header nav a {
+    padding: 7px;
+    font-size: 0.72rem;
+    gap: 5px;
+  }
+  .workspace-live .demo-header nav a .demo-icon {
+    width: 17px;
+    height: 17px;
+  }
+  .workspace-live .demo-header nav {
+    gap: 0;
+  }
+  .workspace-live .demo-page-heading > .demo-actions {
+    width: 100%;
+  }
+}
+@media (max-width: 380px) {
+  .workspace-live .demo-header nav a {
+    flex: 1;
+  }
+}

@@ -16,11 +16,15 @@ insert into public.trips (id, group_id, organizer_id, title, vote_deadline) valu
    '00000000-0000-0000-0000-0000000000a1', 'Future trip', now() + interval '1 day'),
   ('00000000-0000-0000-0000-000000000222', '00000000-0000-0000-0000-000000000111',
    '00000000-0000-0000-0000-0000000000a1', 'Past trip', now() + interval '1 day');
+-- Historical fixture only: this transaction predates the future-date guard.
+-- Restore the guard before any authenticated behavior is exercised.
+alter table public.date_options disable trigger date_options_future_guard;
 insert into public.date_options (id, trip_id, starts_on, ends_on, created_by) values
   ('00000000-0000-0000-0000-000000000331', '00000000-0000-0000-0000-000000000221',
    current_date + 1, current_date + 1, '00000000-0000-0000-0000-0000000000a1'),
   ('00000000-0000-0000-0000-000000000332', '00000000-0000-0000-0000-000000000222',
    current_date - 1, current_date - 1, '00000000-0000-0000-0000-0000000000a1');
+alter table public.date_options enable trigger date_options_future_guard;
 insert into public.place_options (id, trip_id, name, created_by) values
   ('00000000-0000-0000-0000-000000000441', '00000000-0000-0000-0000-000000000221', 'Park', '00000000-0000-0000-0000-0000000000a1'),
   ('00000000-0000-0000-0000-000000000442', '00000000-0000-0000-0000-000000000222', 'Park', '00000000-0000-0000-0000-0000000000a1');

@@ -1,0 +1,13 @@
+{
+  "date": "2026-10-22T07:50:20.647Z",
+  "target": "real Supabase temporary accounts",
+  "origin": "https://weplango-napat6.vercel.app",
+  "checks": [
+    "tie excludes lower-scoring choices",
+    "organizer chooses either tied leader",
+    "cross-month availability counts",
+    "mobile overflow",
+    "selected date and place persisted"
+  ],
+  "googleCalendar": "not exercised"
+}

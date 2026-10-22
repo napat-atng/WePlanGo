@@ -1,0 +1,8 @@
+.env*
+!.env.example
+/docs/
+/supabase/
+/scripts/
+/.impeccable/
+*.md
+**/*.test.ts

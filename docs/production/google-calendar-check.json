@@ -1,0 +1,18 @@
+{
+  "date": "2026-10-20T16:19:26Z",
+  "consent": "connected account persisted",
+  "freeBusy": {
+    "initialFailure": "HTTP 400 timeRangeTooLong for one 760-day request",
+    "fix": "Nine requests of at most 89 days, three concurrent, with merged intervals",
+    "realGoogleApi": "passed",
+    "returnedBusyPeriods": 0,
+    "databaseSync": "last_synced_at populated; error null"
+  },
+  "privacy": "No access tokens, calendar identifiers, event titles or event details included in this report",
+  "pending": [
+    "Real busy event imported and displayed",
+    "RSVP creates and revises one Google event",
+    "Google event removal",
+    "Offline worker deployment"
+  ]
+}

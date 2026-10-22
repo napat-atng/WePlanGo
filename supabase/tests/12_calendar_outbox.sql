@@ -1,0 +1,42 @@
+begin;
+create extension if not exists pgtap with schema extensions;
+set local search_path=public,extensions;
+select plan(1);
+insert into auth.users(id) values('00000000-0000-0000-0000-00000000d401'),('00000000-0000-0000-0000-00000000d402');
+insert into public.profiles(user_id,display_name) values('00000000-0000-0000-0000-00000000d401','Calendar owner'),('00000000-0000-0000-0000-00000000d402','Calendar outsider');
+insert into public.calendar_event_jobs(user_id,room_id,payload) values('00000000-0000-0000-0000-00000000d401','00000000-0000-0000-0000-00000000d403','{"version":1}'::jsonb);
+set local role authenticated;
+do $$
+declare u uuid:='00000000-0000-0000-0000-00000000d401'; other uuid:='00000000-0000-0000-0000-00000000d402'; room uuid:='00000000-0000-0000-0000-00000000d403'; claim jsonb; next_claim jsonb; caught boolean;
+begin
+  perform set_config('request.jwt.claim.sub',u::text,true);
+  caught:=false; begin perform * from private.calendar_credentials; exception when insufficient_privilege then caught:=true; end;
+  if not caught then raise exception 'Credentials directly readable'; end if;
+  caught:=false; begin perform * from public.calendar_pending_users(); exception when insufficient_privilege then caught:=true; end;
+  if not caught then raise exception 'Worker discovery exposed to user'; end if;
+  caught:=false; begin perform public.calendar_command('claim',jsonb_build_object('user',other)); exception when insufficient_privilege then caught:=true; end;
+  if not caught then raise exception 'User claimed another calendar'; end if;
+  perform public.calendar_command('connect',jsonb_build_object('tokens',repeat('encrypted-test-only',4)));
+  claim:=public.calendar_command('claim');
+  if claim->>'lease' is null or jsonb_array_length(claim->'jobs')<>1 then raise exception 'Missing lease or pending job'; end if;
+  if public.calendar_command('claim') is not null then raise exception 'Concurrent sync acquired lease'; end if;
+  perform public.calendar_command('queue_disconnect'); -- Revision changes while network sync runs.
+  perform public.calendar_command('finish',jsonb_build_object('lease',claim->>'lease','results',jsonb_build_array(jsonb_build_object('room',room,'revision',1,'ok',true)),'busy',jsonb_build_array(jsonb_build_object('start',(current_date+1)::timestamptz,'end',(current_date+2)::timestamptz))));
+  if exists(select 1 from public.calendar_event_jobs where user_id=u and revision=synced_revision) then raise exception 'Stale sync acknowledged changed job'; end if;
+  caught:=false; begin perform public.calendar_command('finish',jsonb_build_object('lease',claim->>'lease')); exception when serialization_failure then caught:=true; end;
+  if not caught then raise exception 'Released lease reused'; end if;
+  caught:=false; begin perform public.room_command('availability',jsonb_build_object('day',current_date+1,'answer','free')); exception when invalid_parameter_value then caught:=true; end;
+  if not caught then raise exception 'Imported busy overridden by free'; end if;
+  caught:=false; begin perform public.calendar_command('disconnect'); exception when invalid_parameter_value then caught:=true; end;
+  if not caught then raise exception 'Disconnected before event removal'; end if;
+  perform set_config('request.jwt.claim.sub',other::text,true);
+  if exists(select 1 from public.calendar_busy_periods where user_id=u) or exists(select 1 from public.calendar_account_status where user_id=u) or exists(select 1 from public.calendar_event_jobs where user_id=u) then raise exception 'Private calendar leaked'; end if;
+  perform set_config('request.jwt.claim.sub',u::text,true);
+  next_claim:=public.calendar_command('claim');
+  perform public.calendar_command('finish',jsonb_build_object('lease',next_claim->>'lease','results',jsonb_build_array(jsonb_build_object('room',room,'revision',2,'ok',true))));
+  perform public.calendar_command('disconnect');
+  if exists(select 1 from public.calendar_busy_periods where user_id=u) or exists(select 1 from public.calendar_account_status where user_id=u and connected) then raise exception 'Disconnect left calendar connected'; end if;
+end $$;
+select pass('Calendar lease, revision CAS, privacy, conflict and disconnect guards');
+select * from finish();
+rollback;

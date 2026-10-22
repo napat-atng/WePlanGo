@@ -1,40 +1,63 @@
+import Image from "next/image";
+import { redirect } from "next/navigation";
 import { GoogleSignInButton } from "@/components/GoogleSignInButton";
+import { Icon } from "@/components/ui/Icon";
 import { safeNextPath } from "@/features/access/safe-next-path";
-
+import { getSupabasePublicEnv } from "@/lib/supabase/env";
+import { createServerSupabaseClient } from "@/lib/supabase/server";
+import "@/components/ui/workspace.css";
 export default async function HomePage({
   searchParams,
 }: {
   searchParams: Promise<{ next?: string }>;
 }) {
-  const { next } = await searchParams;
+  const { next } = await searchParams,
+    destination = safeNextPath(next);
+  if (getSupabasePublicEnv()) {
+    const client = await createServerSupabaseClient();
+    const { data } = await client.auth.getUser();
+    if (data.user) redirect(destination);
+  }
   return (
-    <main className="page">
-      <div className="card">
-        <div className="hero">
-          <div className="hero-copy">
-            <div className="brand"><span className="brand-mark" aria-hidden="true" /> WePlanGo</div>
-            <h1>นัดทริปให้<br />ลงตัวทั้งกลุ่ม</h1>
-            <p>ชวนเพื่อน เลือกวัน โหวตสถานที่ แล้วเห็นทันทีว่าใครว่าง ใครยังไม่ตอบ และแผนล่าสุดคืออะไร</p>
-            <GoogleSignInButton nextPath={safeNextPath(next)} />
-            <span className="hero-footnote">เริ่มวางแผนด้วยบัญชี Google</span>
-          </div>
-          <div className="hero-preview" aria-label="ตัวอย่างหน้าสรุปผลโหวต">
-            <div className="preview-top"><span>ตัวอย่างการวางแผน</span><span className="preview-dots" aria-hidden="true"><i /><i /><i /></span></div>
-            <div className="preview-body">
-              <div className="preview-title"><strong>ทริปเชียงใหม่</strong><span>กำลังโหวต</span></div>
-              <p>วันไหนที่เพื่อนว่างตรงกัน?</p>
-              <div className="preview-option"><span>21–23 พ.ย.</span><strong>4 คนว่าง</strong><div className="preview-bar"><i style={{ width: "80%" }} /></div></div>
-              <div className="preview-option"><span>28–30 พ.ย.</span><strong>2 คนว่าง</strong><div className="preview-bar"><i style={{ width: "40%" }} /></div></div>
-              <div className="preview-people"><span>ตอบแล้ว 4/5 คน</span><span>รอเพื่อนอีก 1 คน</span></div>
-            </div>
-          </div>
+    <div className="demo-app">
+      <header className="demo-header">
+        <div className="demo-brand">
+          <span className="demo-brand-mark">
+            <Icon name="mountain" size={24} />
+          </span>
+          WePlanGo
         </div>
-        <div className="hero-steps" aria-label="วิธีใช้ WePlanGo">
-          <div><strong>เริ่มจากกลุ่มเพื่อน</strong><p>รวมคนที่อยากไปด้วยกันในลิงก์เดียว</p></div>
-          <div><strong>หาวันที่ตรงกัน</strong><p>ทุกคนตอบวันและสถานที่ที่สะดวก</p></div>
-          <div><strong>ยืนยันแล้วไปกัน</strong><p>แผนล่าสุดและคำตอบรับอยู่ที่เดียวกัน</p></div>
+      </header>
+      <main className="demo-login">
+        <div>
+          <h1>
+            ทริปดี ๆ เริ่มจาก
+            <br />
+            วันที่เราว่างตรงกัน
+          </h1>
+          <p>ชวนเพื่อน เลือกวัน โหวตที่เที่ยว แล้วไปด้วยกัน</p>
+          <GoogleSignInButton nextPath={destination} className="demo-primary" />
+          <p className="demo-note">เข้าสู่ระบบด้วยบัญชี Google ของคุณ</p>
         </div>
-      </div>
-    </main>
+        <section className="demo-login-preview">
+          <Image
+            unoptimized
+            fill
+            priority
+            src="/mockup/chiang-mai.jpg"
+            alt="บรรยากาศภูเขาเชียงใหม่ยามเย็น"
+            sizes="(max-width:600px) 100vw,600px"
+          />
+          <div className="demo-login-preview-copy">
+            <h2>
+              ครั้งหน้า
+              <br />
+              ไปเที่ยวด้วยกัน
+            </h2>
+            <p>รวมวันว่างและแผนของเพื่อนไว้ที่เดียว</p>
+          </div>
+        </section>
+      </main>
+    </div>
   );
 }

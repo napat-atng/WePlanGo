@@ -15,6 +15,6 @@ test("rejects external and ambiguous OAuth return URLs", () => {
     "javascript:alert(1)",
     "\n/groups",
   ]) {
-    assert.equal(safeNextPath(value), "/groups");
+    assert.equal(safeNextPath(value), "/trips");
   }
 });

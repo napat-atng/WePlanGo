@@ -1,0 +1,22 @@
+{
+  "date": "2026-10-22T07:48:44.378Z",
+  "origin": "https://weplango-napat6.vercel.app",
+  "target": "real Supabase with temporary accounts",
+  "checks": [
+    "create",
+    "invite",
+    "availability",
+    "two-account voting",
+    "outsider RLS denial",
+    "confirm",
+    "RSVP persisted after reload",
+    "profile name",
+    "Storage avatar upload",
+    "plan revision withdraws previous appointment",
+    "chat",
+    "ban/rejoin denial",
+    "unban/rejoin",
+    "delete"
+  ],
+  "googleCalendar": "not tested: requires OAuth client configuration and user consent"
+}

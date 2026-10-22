@@ -1,0 +1,14 @@
+{
+  "date": "2026-10-22T08:00:19.276Z",
+  "method": "Temporary outbox fixture -> real worker -> real Google Calendar",
+  "origin": "https://weplango-napat6.vercel.app",
+  "checks": [
+    "event creation",
+    "actual busy period imported",
+    "same event ID updated",
+    "one active event after revision",
+    "event deletion"
+  ],
+  "fixtureRemoved": true,
+  "productionScheduler": "First event creation completed without an HTTP worker call from the test process; verify Cron and pg_net history alongside this report"
+}

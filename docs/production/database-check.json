@@ -1,0 +1,27 @@
+{
+  "date": "2026-10-20",
+  "target": "Supabase deondfdbovycllaxfuag",
+  "method": "Each SQL file executed in a transaction and rolled back; Docker unavailable",
+  "passed": [
+    "01_rls.sql",
+    "02_invites.sql",
+    "03_participants.sql",
+    "04_voting.sql",
+    "05_confirmation.sql",
+    "06_edit_draft.sql",
+    "07_group_management.sql",
+    "08_notifications.sql",
+    "09_timezone.sql",
+    "10_trip_completion.sql",
+    "11_room_workspace.sql",
+    "12_calendar_outbox.sql",
+    "13_calendar_worker.sql"
+  ],
+  "oauth": {
+    "calendarRedirectPkceAndInvalidState": "passed",
+    "googleConsentAndCalendarWrites": "Consent, actual busy import, event creation, same-ID update and deletion passed on production; see google-worker-check.json",
+    "loginLocalRedirect": "Local callback verified after allow list update; user confirmed Google login succeeds after fixing provider secret",
+    "loginProduction": "User confirmed Google login and connected Profile on production on 2026-10-22"
+  },
+  "worker": "Vault configured; scheduled Cron run 483 at 2026-10-22T08:00:00Z invoked production worker: HTTP 200, processed 1, failed 0"
+}

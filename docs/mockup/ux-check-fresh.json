@@ -1,0 +1,26 @@
+{
+  "date": "2026-10-20",
+  "type": "automated simulated user flow; not a human usability study",
+  "taskClicks": {
+    "organizer": 10,
+    "member": 7
+  },
+  "excludes": [
+    "Google demo sign-in",
+    "typing",
+    "switching demo accounts",
+    "verification navigation"
+  ],
+  "memberAvailability": "entered availability during this trip",
+  "checks": [
+    "create -> invite -> availability -> propose -> vote -> confirm -> RSVP",
+    "role permissions",
+    "persistence",
+    "mobile overflow",
+    "images",
+    "local fonts",
+    "keyboard tabs",
+    "chat",
+    "no external requests"
+  ]
+}

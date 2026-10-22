@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "WePlanGo",
   description: "วางแผนทริปกับเพื่อนในที่เดียว",
 };
+export const maxDuration = 60;
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (

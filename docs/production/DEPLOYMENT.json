@@ -1,0 +1,27 @@
+{
+  "verifiedAt": "2026-10-22",
+  "origin": "https://weplango-napat6.vercel.app",
+  "deploymentId": "dpl_Zaf2LnKNx88BAF7fAdKyerFMREgh",
+  "deploymentUrl": "https://weplango-pwumwvbdi-napat6.vercel.app",
+  "status": "Ready",
+  "googleLoginAndConnectedProfile": "Confirmed by user on production",
+  "scheduler": {
+    "name": "weplango-calendar-sync",
+    "schedule": "*/5 * * * *",
+    "vaultConfigured": true,
+    "runId": 483,
+    "startedAt": "2026-10-22T08:00:00.090996Z",
+    "status": "succeeded",
+    "httpResponseId": 4,
+    "httpStatus": 200,
+    "processed": 1,
+    "failed": 0,
+    "testProcessCalledWorkerForInitialCreation": false
+  },
+  "cleanup": {
+    "fixtureAccountsRemaining": 0,
+    "pendingOrphanJobs": 0,
+    "temporaryGoogleEventRemoved": true
+  },
+  "scope": "Room browser flow uses two temporary email accounts plus outsider; Google integration uses one real Google account and a temporary outbox fixture."
+}
