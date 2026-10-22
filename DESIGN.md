@@ -111,3 +111,17 @@ ThaiTimeInput uses explicit hour options 00–23 and minute options 00–59, wit
 The trip creation form shows its description, date range, and voting deadline immediately; these fields are not behind a disclosure. Date display inputs are native read-only with inputMode=none, while a separate validation control preserves required and range validation. All dates and deadline dates are chosen through the shared calendar; hours and minutes remain selection-only.
 
 Expanded trip metadata participates in the hero's normal layout instead of floating outside its clipped cover. Invitation actions use equal-width grid columns with a 12px gap. Trip next-step and RSVP buttons use a flex row with equal minimum heights and wrap on narrow screens. Google Calendar actions use a 16px gap in both connected and disconnected states.
+
+## Motion system — shared across screens
+
+The app-wide motion stylesheet is src/components/ui/motion.css. InteractionEffects mounts once in the root layout and gives enabled buttons and links a short pointer ripple without changing their click or focus behavior. Feedback overlays are limited to four, removed after 380ms, and cleared on scroll, hidden documents, reduced-motion changes, and component cleanup. Keyboard controls retain their normal focus and active states.
+
+Public sign-in uses one 600ms destination-photo reveal. Workspace pages enter over 300ms; month grids transition over 240ms; tabs retain their 220ms content transition with an animated active underline. New chat messages arrive from their author's side. Notices and confirmation dialogs have short entrance feedback. Vote totals ease to their updated bar size. Detail disclosures reveal their content without clipping or changing the earlier form rules.
+
+JourneyProgress replaces the plain step caption with the same caption plus a small five-stop route. Its marker moves to the active planning step over 360ms. The route represents the existing stage calculation, not a claim that earlier steps are completed.
+
+Error, not-found, and sign-in-error pages share StateScreen, the current mountain mark, Thai fonts, teal palette, and a single icon entrance. Font-face declarations live in globals.css so directly opening a recovery route uses the same self-hosted Thai fonts as the workspace.
+
+All animations leave content visible by default. Hover effects apply only on devices with a fine pointer. Reduced motion disables spatial animations, transitions, ripples, and smooth scrolling while preserving labels and state feedback. No new animation dependency, scroll polling, autoplay media, or endless decorative loop is added.
+
+Supporting motion tokens: progress labels use .85rem on desktop and .78rem on mobile. The active route marker is 28px, and recovery emblems are 72px with 24px corners; these are icon containers, not content cards. Press feedback uses the control's actual foreground color and corner radius.

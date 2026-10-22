@@ -43,6 +43,7 @@ export function GoogleSignInButton({
         type="button"
         onClick={signIn}
         disabled={!configured || loading}
+        aria-busy={loading}
       >
         {loading ? "กำลังเชื่อมต่อ..." : "เข้าสู่ระบบด้วย Google"}
       </button>

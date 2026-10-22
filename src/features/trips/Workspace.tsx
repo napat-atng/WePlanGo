@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Icon, type IconName } from "@/components/ui/Icon";
 import { MonthPicker } from "@/components/ui/MonthPicker";
+import { JourneyProgress } from "@/components/ui/JourneyProgress";
 import {
   disconnectCalendar,
   synchronizeCalendar,
@@ -312,7 +313,7 @@ export default function Workspace({
             คนว่าง / สมาชิก
           </p>
         )}
-        <div className="demo-calendar-grid">
+        <div className="demo-calendar-grid" key={month}>
           {["จ", "อ", "พ", "พฤ", "ศ", "ส", "อา"].map((d) => (
             <strong className="demo-weekday" key={d}>
               {d}
@@ -447,7 +448,7 @@ export default function Workspace({
         </nav>
       </header>
       {notice && (
-        <div className="demo-notice" role="status">
+        <div className="demo-notice" role="status" key={notice}>
           <span>{notice}</span>
           <button onClick={() => setNotice("")} aria-label="ปิดข้อความแจ้งผล">
             ปิด
@@ -898,18 +899,7 @@ export default function Workspace({
                 />
               </div>
             </div>
-            <p className="workspace-progress">
-              ขั้นตอน {stage + 1}/5 ·{" "}
-              {
-                [
-                  "ชวนเพื่อน",
-                  "เลือกวัน",
-                  "เลือกที่เที่ยว",
-                  "สรุปแผน",
-                  "ตอบรับ",
-                ][stage]
-              }
-            </p>
+            <JourneyProgress stage={stage} />
             <div
               className="demo-tabs"
               role="tablist"

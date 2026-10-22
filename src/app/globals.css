@@ -1,3 +1,15 @@
+﻿@font-face {
+  font-family: "Trip Thai";
+  src: url("/mockup/thai-regular.ttf") format("truetype");
+  font-weight: 400 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Trip Thai";
+  src: url("/mockup/thai-semibold.ttf") format("truetype");
+  font-weight: 600 800;
+  font-display: swap;
+}
 :root {
   color-scheme: light;
   --ink: #183649;

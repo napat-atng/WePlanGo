@@ -251,7 +251,7 @@ export default function MockupApp() {
             <Icon name="users" size={15} /> คนว่าง / สมาชิก
           </p>
         )}
-        <div className="demo-calendar-grid">
+        <div className="demo-calendar-grid" key={month}>
           {["จ", "อ", "พ", "พฤ", "ศ", "ส", "อา"].map((d) => (
             <strong className="demo-weekday" key={d}>
               {d}
@@ -531,7 +531,7 @@ export default function MockupApp() {
         </div>
       )}
       {notice && (
-        <div className="demo-notice" role="status">
+        <div className="demo-notice" role="status" key={notice}>
           <span>{notice}</span>
           <button aria-label="ปิดข้อความแจ้งผล" onClick={() => setNotice("")}>
             ปิด

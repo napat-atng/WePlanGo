@@ -1,0 +1,23 @@
+{
+  "results": [
+    "home 1440: renders, no overflow",
+    "create 1440: renders, no overflow",
+    "profile 1440: renders, no overflow",
+    "invite 1440: renders, no overflow",
+    "room 1440: renders, no overflow",
+    "landing 1440: renders",
+    "auth-error 1440: renders",
+    "not-found 1440: renders",
+    "reduced motion 1440: no entry animation, no marker transition, no ripple",
+    "home 390: renders, no overflow",
+    "create 390: renders, no overflow",
+    "profile 390: renders, no overflow",
+    "invite 390: renders, no overflow",
+    "room 390: renders, no overflow",
+    "landing 390: renders",
+    "auth-error 390: renders",
+    "not-found 390: renders",
+    "reduced motion 390: no entry animation, no marker transition, no ripple"
+  ],
+  "errors": []
+}
