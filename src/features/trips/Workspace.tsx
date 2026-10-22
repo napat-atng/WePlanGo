@@ -1361,16 +1361,11 @@ export default function Workspace({
                     <h2>เพื่อนร่วมทริป</h2>
                     {owner && (
                       <div className="demo-invite">
-                        <button disabled={busy} onClick={() => void share()}>
+                        <div className="demo-actions workspace-invite-actions">
+<button disabled={busy} onClick={() => void share()}>
                           <Icon name="copy" />
                           สร้างคำเชิญใหม่
                         </button>
-                        {invite && (
-                          <label>
-                            ลิงก์เชิญ
-                            <input readOnly value={invite} />
-                          </label>
-                        )}
                         <button
                           disabled={busy}
                           onClick={() =>
@@ -1389,6 +1384,13 @@ export default function Workspace({
                         >
                           ปิดลิงก์เชิญ
                         </button>
+</div>
+                        {invite && (
+                          <label>
+                            ลิงก์เชิญ
+                            <input readOnly value={invite} />
+                          </label>
+                        )}
                         <p className="demo-note">
                           สร้างคำเชิญใหม่จะยกเลิกลิงก์เก่า คำเชิญมีอายุ 30 วัน
                         </p>
