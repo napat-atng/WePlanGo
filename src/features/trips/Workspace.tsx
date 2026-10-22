@@ -767,62 +767,64 @@ export default function Workspace({
                         : "เชื่อมต่อแล้ว"
                     : "ยังไม่ได้เชื่อมต่อ"}
                 </p>
-                {data.calendar.connected ? (
-                  <>
-                    <button
-                      disabled={busy}
-                      onClick={async () => {
-                        setBusy(true);
-                        try {
-                          const result = await synchronizeCalendar();
-                          setNotice(
-                            result.ok
-                              ? "ซิงก์ Calendar แล้ว"
-                              : (result.error ?? "ซิงก์ไม่สำเร็จ"),
-                          );
-                          await refresh();
-                        } finally {
-                          setBusy(false);
+                <div className="demo-actions workspace-calendar-actions">
+                  {data.calendar.connected ? (
+                    <>
+                      <button
+                        disabled={busy}
+                        onClick={async () => {
+                          setBusy(true);
+                          try {
+                            const result = await synchronizeCalendar();
+                            setNotice(
+                              result.ok
+                                ? "ซิงก์ Calendar แล้ว"
+                                : (result.error ?? "ซิงก์ไม่สำเร็จ"),
+                            );
+                            await refresh();
+                          } finally {
+                            setBusy(false);
+                          }
+                        }}
+                      >
+                        ซิงก์ตอนนี้
+                      </button>
+                      <button
+                        disabled={busy}
+                        onClick={() =>
+                          setConfirm({
+                            text: "ถอนนัดที่แอปสร้างใน Google แล้วเลิกเชื่อมต่อ? นัดใน Profile ยังอยู่",
+                            run: () => {
+                              setBusy(true);
+                              disconnectCalendar()
+                                .then(async (result) => {
+                                  setNotice(
+                                    result.ok
+                                      ? "ยกเลิกการเชื่อมต่อแล้ว"
+                                      : (result.error ?? "ยกเลิกไม่สำเร็จ"),
+                                  );
+                                  await refresh();
+                                })
+                                .catch(() => setNotice("ยกเลิกไม่สำเร็จ"))
+                                .finally(() => setBusy(false));
+                            },
+                          })
                         }
-                      }}
-                    >
-                      ซิงก์ตอนนี้
-                    </button>
-                    <button
-                      disabled={busy}
-                      onClick={() =>
-                        setConfirm({
-                          text: "ถอนนัดที่แอปสร้างใน Google แล้วเลิกเชื่อมต่อ? นัดใน Profile ยังอยู่",
-                          run: () => {
-                            setBusy(true);
-                            disconnectCalendar()
-                              .then(async (result) => {
-                                setNotice(
-                                  result.ok
-                                    ? "ยกเลิกการเชื่อมต่อแล้ว"
-                                    : (result.error ?? "ยกเลิกไม่สำเร็จ"),
-                                );
-                                await refresh();
-                              })
-                              .catch(() => setNotice("ยกเลิกไม่สำเร็จ"))
-                              .finally(() => setBusy(false));
-                          },
-                        })
-                      }
-                    >
-                      ยกเลิกการเชื่อมต่อ
-                    </button>
-                  </>
-                ) : data.calendar.configured ? (
-                  <a href="/api/calendar/connect" className="workspace-button">
-                    เชื่อมต่อ Google
-                  </a>
-                ) : (
-                  <p className="demo-note">
-                    กำลังเตรียมการเชื่อม Google Calendar
-                    คุณยังระบุวันว่างและใช้นัดใน Profile ได้
-                  </p>
-                )}
+                      >
+                        ยกเลิกการเชื่อมต่อ
+                      </button>
+                    </>
+                  ) : data.calendar.configured ? (
+                    <a href="/api/calendar/connect" className="workspace-button">
+                      เชื่อมต่อ Google
+                    </a>
+                  ) : (
+                    <p className="demo-note">
+                      กำลังเตรียมการเชื่อม Google Calendar
+                      คุณยังระบุวันว่างและใช้นัดใน Profile ได้
+                    </p>
+                  )}
+                </div>
                 {data.calendar.error && (
                   <p role="alert" className="demo-note">
                     {data.calendar.error}
@@ -1362,29 +1364,29 @@ export default function Workspace({
                     {owner && (
                       <div className="demo-invite">
                         <div className="demo-actions workspace-invite-actions">
-<button disabled={busy} onClick={() => void share()}>
-                          <Icon name="copy" />
-                          สร้างคำเชิญใหม่
-                        </button>
-                        <button
-                          disabled={busy}
-                          onClick={() =>
-                            setConfirm({
-                              text: "ยกเลิกคำเชิญทั้งหมดที่ยังเปิดอยู่?",
-                              run: () => {
-                                void run(
-                                  "revoke_invites",
-                                  {},
-                                  "ปิดลิงก์เชิญแล้ว",
-                                );
-                                setInvite("");
-                              },
-                            })
-                          }
-                        >
-                          ปิดลิงก์เชิญ
-                        </button>
-</div>
+                          <button disabled={busy} onClick={() => void share()}>
+                            <Icon name="copy" />
+                            สร้างคำเชิญใหม่
+                          </button>
+                          <button
+                            disabled={busy}
+                            onClick={() =>
+                              setConfirm({
+                                text: "ยกเลิกคำเชิญทั้งหมดที่ยังเปิดอยู่?",
+                                run: () => {
+                                  void run(
+                                    "revoke_invites",
+                                    {},
+                                    "ปิดลิงก์เชิญแล้ว",
+                                  );
+                                  setInvite("");
+                                },
+                              })
+                            }
+                          >
+                            ปิดลิงก์เชิญ
+                          </button>
+                        </div>
                         {invite && (
                           <label>
                             ลิงก์เชิญ

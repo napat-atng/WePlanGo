@@ -105,3 +105,9 @@ The browser-only mockup shares the Thai date component and visual primitives, bu
 ### Time selector implementation
 
 ThaiTimeInput uses explicit hour options 00–23 and minute options 00–59, with Thai accessible labels and the suffix น. It does not use the browser-native time input, whose visible clock may follow an AM/PM operating-system locale. ThaiDateInput continues to submit the combined ISO local datetime value.
+
+### Forms and action layout follow-up
+
+The trip creation form shows its description, date range, and voting deadline immediately; these fields are not behind a disclosure. Date display inputs are native read-only with inputMode=none, while a separate validation control preserves required and range validation. All dates and deadline dates are chosen through the shared calendar; hours and minutes remain selection-only.
+
+Expanded trip metadata participates in the hero's normal layout instead of floating outside its clipped cover. Invitation actions use equal-width grid columns with a 12px gap. Trip next-step and RSVP buttons use a flex row with equal minimum heights and wrap on narrow screens. Google Calendar actions use a 16px gap in both connected and disconnected states.
