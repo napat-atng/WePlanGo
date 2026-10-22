@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import "./globals.css";
+import "@/components/ui/thai-date.css";
 
 export const metadata: Metadata = {
   title: "WePlanGo",

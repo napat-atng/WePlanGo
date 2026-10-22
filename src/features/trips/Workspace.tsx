@@ -1,5 +1,7 @@
 "use client";
 
+import { ThaiDateInput } from "@/components/ui/ThaiDateInput";
+
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -371,7 +373,7 @@ export default function Workspace({
             <summary>ดูว่าใครว่างบ้าง</summary>
             <label>
               วันที่
-              <input
+              <ThaiDateInput
                 type="date"
                 value={selectedDate}
                 onChange={(e) => {
@@ -597,7 +599,7 @@ export default function Workspace({
                 <div className="demo-two">
                   <label>
                     หาวันตั้งแต่
-                    <input
+                    <ThaiDateInput
                       name="start"
                       type="date"
                       min={todayBangkok()}
@@ -607,7 +609,7 @@ export default function Workspace({
                   </label>
                   <label>
                     ถึงวันที่
-                    <input
+                    <ThaiDateInput
                       name="end"
                       type="date"
                       defaultValue={new Date(
@@ -622,7 +624,7 @@ export default function Workspace({
                 </div>
                 <label>
                   ปิดโหวต (เวลาไทย)
-                  <input
+                  <ThaiDateInput
                     type="datetime-local"
                     name="deadline"
                     defaultValue={zonedInputValue(
@@ -949,6 +951,7 @@ export default function Workspace({
             </div>
             <div className="demo-focused-workspace">
               <section
+                key={tab}
                 className="demo-panel"
                 id="workspace-panel"
                 hidden={tab === 3}
@@ -1151,7 +1154,7 @@ export default function Workspace({
                           >
                             <label>
                               วันเดินทาง
-                              <input
+                              <ThaiDateInput
                                 type="date"
                                 required
                                 min={

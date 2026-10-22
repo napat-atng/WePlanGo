@@ -1,5 +1,7 @@
 "use client";
 
+import { ThaiDateInput } from "@/components/ui/ThaiDateInput";
+
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { Icon, type IconName } from "./Icon";
@@ -319,7 +321,7 @@ export default function MockupApp() {
           <details className="demo-responses">
             <summary>ดูว่าใครว่างบ้าง</summary>
             <h3>คำตอบวันที่ {dateLabel(chosenDate)}</h3>
-            <input
+            <ThaiDateInput
               aria-label="ดูคำตอบวันที่"
               type="date"
               min={trip.start}
@@ -868,7 +870,7 @@ export default function MockupApp() {
                   <div className="demo-two">
                     <label>
                       หาวันตั้งแต่
-                      <input
+                      <ThaiDateInput
                         name="start"
                         type="date"
                         defaultValue="2026-11-01"
@@ -877,7 +879,7 @@ export default function MockupApp() {
                     </label>
                     <label>
                       ถึงวันที่
-                      <input
+                      <ThaiDateInput
                         name="end"
                         type="date"
                         defaultValue="2026-11-30"
@@ -887,7 +889,7 @@ export default function MockupApp() {
                   </div>
                   <label>
                     ปิดโหวต (เวลาไทย)
-                    <input
+                    <ThaiDateInput
                       name="deadline"
                       type="datetime-local"
                       defaultValue="2026-11-10T18:00"
@@ -1306,7 +1308,7 @@ export default function MockupApp() {
                           >
                             <label>
                               วันเดินทาง
-                              <input
+                              <ThaiDateInput
                                 type="date"
                                 min={trip.start}
                                 max={trip.end}

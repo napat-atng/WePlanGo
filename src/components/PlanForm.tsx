@@ -1,5 +1,7 @@
 "use client";
 
+import { ThaiDateInput } from "@/components/ui/ThaiDateInput";
+
 import { useState } from "react";
 import { savePlan } from "@/features/trips/plan-actions";
 
@@ -50,7 +52,7 @@ export function PlanForm({
       {date && date.available <= 1 && <p className="form-note">วันดังกล่าวมีคนว่างเพียง {date.available} คน โปรดตรวจแผนก่อนยืนยัน</p>}
       {place && placeSupport <= 1 && <p className="form-note">สถานที่นี้มีคนที่ว่างในวันที่เลือกสนใจเพียง {placeSupport} คน</p>}
       <label htmlFor="meeting-time">เวลานัดพบ ({timezone})</label>
-      <input id="meeting-time" name="meetingLocal" type="datetime-local" required value={meetingTime} onChange={(event) => setMeetingTime(event.target.value)} />
+      <ThaiDateInput id="meeting-time" name="meetingLocal" type="datetime-local" required value={meetingTime} onChange={(event) => setMeetingTime(event.target.value)} />
       <label htmlFor="meeting-point">จุดนัดพบ</label>
       <input id="meeting-point" name="meetingPoint" required maxLength={500} value={point} onChange={(event) => setPoint(event.target.value)} />
       {unchanged && <p className="field-hint">แผนยังเหมือนเดิม เปลี่ยนข้อมูลก่อนบันทึก</p>}

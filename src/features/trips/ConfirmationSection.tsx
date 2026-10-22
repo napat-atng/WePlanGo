@@ -1,3 +1,4 @@
+import { formatThaiDate } from "@/lib/thai-date";
 import { PlanForm } from "@/components/PlanForm";
 import { createServerSupabaseClient } from "@/lib/supabase/server";
 import { tallyVotes, type Participant } from "@/features/voting/tally";
@@ -57,7 +58,7 @@ export async function ConfirmationSection({
     const counts = summary.dates.find((item) => item.id === option.id);
     return {
       id: option.id,
-      label: option.starts_on === option.ends_on ? option.starts_on : `${option.starts_on} – ${option.ends_on}`,
+      label: option.starts_on === option.ends_on ? formatThaiDate(option.starts_on) : `${formatThaiDate(option.starts_on)} – ${formatThaiDate(option.ends_on)}`,
       available: counts?.available ?? 0,
       maybe: counts?.maybe ?? 0,
     };
@@ -89,7 +90,7 @@ export async function ConfirmationSection({
     <section id="confirmation-section" className="group-list">
       <h2>{trip.status === "voting" ? "สรุปผลและยืนยันแผน" : "แผนที่ยืนยัน"}</h2>
       {chosenDate && chosenPlace && <div className="confirmed-plan">
-        <p><strong>วัน:</strong> {chosenDate.starts_on}{chosenDate.ends_on !== chosenDate.starts_on && ` – ${chosenDate.ends_on}`}</p>
+        <p><strong>วัน:</strong> {formatThaiDate(chosenDate.starts_on)}{chosenDate.ends_on !== chosenDate.starts_on && ` – ${formatThaiDate(chosenDate.ends_on)}`}</p>
         <p><strong>สถานที่:</strong> {chosenPlace.name}</p>
         {trip.meeting_at && <p><strong>เวลานัดพบ:</strong> {new Date(trip.meeting_at).toLocaleString("th-TH", { timeZone: trip.timezone })}</p>}
         <p><strong>จุดนัดพบ:</strong> {trip.meeting_point}</p>

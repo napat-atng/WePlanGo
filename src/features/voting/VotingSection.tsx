@@ -1,3 +1,5 @@
+import { formatThaiDate } from "@/lib/thai-date";
+import { ThaiDateInput } from "@/components/ui/ThaiDateInput";
 import { createServerSupabaseClient } from "@/lib/supabase/server";
 import {
   addDateOption, addPlaceOption, editDateOption, editPlaceOption, openVoting, removeOption,
@@ -97,7 +99,7 @@ export async function VotingSection({
       {dates.length ? <ul className="result-list">{dates.map((option) => {
         const counts = summary.dates.find((item) => item.id === option.id);
         return <li key={option.id} className="result-item">
-          <div className="result-item-top"><strong>{option.starts_on}{option.ends_on !== option.starts_on && ` – ${option.ends_on}`}</strong>
+          <div className="result-item-top"><strong>{formatThaiDate(option.starts_on)}{option.ends_on !== option.starts_on && ` – ${formatThaiDate(option.ends_on)}`}</strong>
           {trip.status !== "draft" && (counts?.available ?? 0) === leadingDateCount && leadingDateCount > 0 && <span className="leader-tag">ว่างมากที่สุด</span>}</div>
           {trip.status !== "draft" && <div className="result-counts" aria-label={`ว่าง ${counts?.available ?? 0} อาจว่าง ${counts?.maybe ?? 0} ไม่ว่าง ${counts?.unavailable ?? 0}`}>
             <span className="count-available"><b>{counts?.available ?? 0}</b> ว่าง</span>
@@ -115,8 +117,8 @@ export async function VotingSection({
             <form action={editDateOption} className="group-form">
               <input type="hidden" name="tripId" value={trip.id} />
               <input type="hidden" name="optionId" value={option.id} />
-              <label>วันเริ่ม<input name="startsOn" type="date" required defaultValue={option.starts_on} /></label>
-              <label>วันสิ้นสุด<input name="endsOn" type="date" required defaultValue={option.ends_on} /></label>
+              <label>วันเริ่ม<ThaiDateInput name="startsOn" type="date" required defaultValue={option.starts_on} /></label>
+              <label>วันสิ้นสุด<ThaiDateInput name="endsOn" type="date" required defaultValue={option.ends_on} /></label>
               <button type="submit" className="primary-button">บันทึก</button>
             </form>
           </details>}
@@ -125,9 +127,9 @@ export async function VotingSection({
       {canPropose && <form action={addDateOption} className="group-form">
         <input type="hidden" name="tripId" value={trip.id} />
         <label htmlFor="date-start">วันเริ่ม</label>
-        <input id="date-start" name="startsOn" type="date" required />
+        <ThaiDateInput id="date-start" name="startsOn" type="date" required />
         <label htmlFor="date-end">วันสิ้นสุด</label>
-        <input id="date-end" name="endsOn" type="date" required />
+        <ThaiDateInput id="date-end" name="endsOn" type="date" required />
         <p className="field-hint">วันสิ้นสุดต้องไม่ผ่านมาแล้ว และต้องไม่ก่อนวันปิดโหวตของทริป</p>
         <button type="submit" className="primary-button">เสนอวัน</button>
       </form>}
@@ -188,7 +190,7 @@ export async function VotingSection({
           <table>
             <thead><tr>
               <th scope="col">เพื่อน</th>
-              {dates.map((option) => <th scope="col" key={option.id}>{option.starts_on}{option.ends_on !== option.starts_on && ` – ${option.ends_on}`}</th>)}
+              {dates.map((option) => <th scope="col" key={option.id}>{formatThaiDate(option.starts_on)}{option.ends_on !== option.starts_on && ` – ${formatThaiDate(option.ends_on)}`}</th>)}
               <th scope="col">สถานที่ที่เลือก</th>
             </tr></thead>
             <tbody>{visibleParticipants.map((person) => {
@@ -218,7 +220,7 @@ export async function VotingSection({
           <h3>วันไหนสะดวกบ้าง</h3>
           <input type="hidden" name="tripId" value={trip.id} />
           {dates.map((option) => <fieldset key={option.id}>
-            <legend>{option.starts_on}{option.ends_on !== option.starts_on && ` – ${option.ends_on}`}</legend>
+            <legend>{formatThaiDate(option.starts_on)}{option.ends_on !== option.starts_on && ` – ${formatThaiDate(option.ends_on)}`}</legend>
             {(["available", "maybe", "unavailable"] as const).map((answer) => <label key={answer}>
               <input type="radio" name={`date-${option.id}`} value={answer} required defaultChecked={myDateVotes.get(option.id) === answer} />
               {answer === "available" ? "ว่าง" : answer === "maybe" ? "อาจว่าง" : "ไม่ว่าง"}

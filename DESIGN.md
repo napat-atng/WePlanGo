@@ -1,89 +1,103 @@
----
+﻿---
 name: WePlanGo
-description: A shared trip planning workspace that makes group decisions easy to read.
+description: A friendly shared travel workspace, inspired by Airbnb clarity and Wanderlog planning.
 colors:
-  ink: "#183540"
-  muted: "#526b72"
-  primary: "#146a70"
-  primary-deep: "#0d5158"
-  primary-soft: "#e7f2ee"
-  line: "#d9e2dd"
-  paper: "#fffefa"
-  ground: "#f3f5ef"
-  sun: "#efbb56"
-  sun-soft: "#fff5d9"
-  danger: "#a33f39"
+  ink: "#243b3b"
+  muted: "#596c6b"
+  primary: "#087f79"
+  primary-deep: "#06645f"
+  primary-soft: "#e7f3ef"
+  line: "#dce5e2"
+  paper: "#ffffff"
+  ground: "#f7f8f5"
+  sun: "#ffb75b"
+  danger: "#a3303d"
 typography:
-  display:
-    fontFamily: "Noto Sans Thai, Leelawadee UI, Tahoma, sans-serif"
-    fontSize: "clamp(3.1rem, 5.5vw, 5.8rem)"
-    fontWeight: 800
-    lineHeight: 1.09
   heading:
-    fontFamily: "Noto Sans Thai, Leelawadee UI, Tahoma, sans-serif"
-    fontSize: "clamp(2rem, 3.5vw, 3.4rem)"
-    fontWeight: 800
-    lineHeight: 1.21
+    fontFamily: "Trip Thai, Leelawadee UI, sans-serif"
+    fontSize: "clamp(1.7rem, 2.9vw, 2.5rem)"
+    fontWeight: 600
+    lineHeight: 1.3
   body:
-    fontFamily: "Noto Sans Thai, Leelawadee UI, Tahoma, sans-serif"
+    fontFamily: "Trip Thai, Leelawadee UI, sans-serif"
     fontSize: "1rem"
-    lineHeight: 1.7
+    lineHeight: 1.6
 rounded:
-  control: "8px"
-  surface: "14px"
+  control: "10px"
+  surface: "16px"
 spacing:
   tight: "8px"
   regular: "16px"
-  section: "28px"
+  section: "24px"
 components:
   button-primary:
     backgroundColor: "{colors.primary}"
     textColor: "{colors.paper}"
     rounded: "{rounded.control}"
-    height: "46px"
+    height: "44px"
   button-secondary:
     backgroundColor: "{colors.paper}"
-    textColor: "{colors.primary-deep}"
+    textColor: "{colors.ink}"
     rounded: "{rounded.control}"
-    height: "46px"
+    height: "44px"
 ---
 
-# Design System: WePlanGo
+# WePlanGo design system
 
-## Overview
+## Approved direction
 
-**Creative North Star: “สมุดนัดทริป” (Journey Notebook).** WePlanGo should feel like a clear, friendly place where friends settle a plan together. The interface leads with the current decision, shows who has answered, and keeps setup and management nearby without competing for attention.
+A welcoming travel workspace for friends on phones and desktop. Airbnb informs the clear hierarchy, generous spacing, destination photography, and approachable date selection. Wanderlog informs the organization of dates, places, and shared decisions. These are references, not copied screens or added product capabilities.
 
-**Key Characteristics:** Deep ink framing, warm yellow for invitations to act, quiet paper surfaces, and compact status colors used only where they explain data.
+The interface uses warm white surfaces, a quiet neutral green ground, dark green ink, and teal actions. Preserve the WePlanGo mountain mark and existing travel photographs. The earlier dark-ink and yellow Journey Notebook direction is superseded by this system.
 
-## Colors
+References: https://www.airbnb.com/, https://wanderlog.com/, https://m3.material.io/styles/motion/overview/how-it-works
 
-Ink frames navigation and important steps. Paper and pale green ground keep long planning sessions comfortable. Yellow calls attention to a next action or a leading choice. Green means available or going; amber means maybe or pending; soft red means unavailable or not going. Every state includes text as well as color.
+## Layout and hierarchy
 
-## Typography
+Mode: Operate for workspace routes; Persuade for the sign-in page.
 
-Thai copy uses the Noto Sans Thai stack. Large headings have a compact measure; body copy stays readable at 1rem with 1.7 line height. Counts and response totals use tabular numerals. Labels are short and literal.
+Keep the trip identity and photograph together above the task navigation. Tabs follow the actual trip workflow: trip, availability, places, chat, and members. Place the current decision and its next action before administrative settings. Preserve all existing permissions, votes, RSVP behavior, and Thai product copy.
 
-## Layout
+Use a flexible primary column with a 340px chat column on wide screens. Below the existing desktop breakpoint the active task becomes a single column; chat stays available through its tab. Use 24px section gaps and 20–32px panel padding. Panels and trip covers have 16px corners; controls have 10px corners and at least 44px height. Calendar day targets are at least 40px high.
 
-The main workspace is wider than the utility rail on desktop. On smaller screens, both become one column and the active work stays above management. Vote and RSVP tables scroll horizontally with a sticky name column. The journey strip remains a compact overview of the real trip stage.
+## Typography and surfaces
 
-## Elevation & Depth
+Use the existing self-hosted Trip Thai regular and semibold fonts. Body text is 16px with 1.6 line height. Headings scale to the viewport, with compact but readable Thai line spacing. Use tabular numerals for dates and counts. Muted text must remain readable against its surface. Inputs use the primary color for the caret, a clear focus outline, and readable placeholders.
 
-Surfaces are defined primarily by a single border. A small, soft, offset shadow separates large panels from the ground. The landing preview gets a stronger shadow because it represents the working product against a dark shell.
+White panels are separated by spacing on the warm ground. Reserve soft downward shadows for date popovers and floating UI. Travel photographs provide character; functional information stays outside the photograph. Avoid decorative gradients, excessive nested cards, and animated backgrounds.
 
-## Shapes
+## Thai dates and time
 
-Controls use 8px corners, content surfaces use 14px. Status tags use small rectangular corners; pills are reserved for small metadata. The brand mark is a two-stop route line rather than a decorative symbol.
+Display day and month names in Thai, years in the Buddhist calendar (พ.ศ.), and Arabic numerals. Example: 22 ตุลาคม 2569. Use a 24-hour time field, never AM/PM. The date picker has Thai month names, Buddhist year choices, Thai weekday headings, selected and disabled states, keyboard focus, Escape dismissal, and a close action.
 
-## Components
+Use ThaiDateInput for real workspace date and datetime fields and the legacy voting and confirmation forms. Keep the standalone browser prototype separate from authentication and real mutations. MonthPicker continues to display Thai months and Buddhist years.
 
-Primary buttons are filled teal and name the action. Secondary buttons are outlined. Result rows use dividers within one surface, with count chips for each answer type. The response matrix shows a text status inside a colored tag. Empty, error, hover, focus, and disabled states must remain legible.
+Submit dates as Gregorian ISO YYYY-MM-DD and local wall times as YYYY-MM-DDTHH:mm. Formatting must never add 543 to stored values. Preserve the existing time-zone conversion on the server. Calendar bounds disable out-of-range dates and form validity checks enforce supplied date/time bounds. Dates without a time are formatted in UTC to prevent day shifts; room deadlines follow the room's existing time-zone rules.
 
-## Do's and Don'ts
+## Loading and feedback
 
-- Do place the current plan or vote result before setup and administrative controls.
-- Do show response counts, outstanding friends, and individual states together.
-- Do use the same status wording in summaries and detail tables.
-- Don't use a stack of identical cards where a list or table is clearer.
-- Don't rely on color alone to explain attendance or availability.
+The route loading screen uses the same brand, ground, cover shape, tabs, and two-column workspace proportions. Neutral skeletons indicate content structure and gently pulse while fetching; do not show invented progress percentages. Announce loading through a status message and aria-busy. On mobile, keep one skeleton content column.
+
+Keep error, empty, pending, selected, disabled, and success states legible. Color supplements explicit status text. Save feedback stays visible through the existing status announcement.
+
+## Motion
+
+Use CSS with no animation dependency. Controls acknowledge presses with a small scale change and 150ms color transitions. Date popovers reveal with a 180ms clip; task panels transition over 220ms; save and alert feedback arrives over 220ms. Travel card photographs may zoom gently by 2.5% on hover. Skeleton opacity breathes over 1.6 seconds.
+
+Use cubic-bezier(.16, 1, .3, 1) for arrivals. Never delay access to controls or hide content awaiting JavaScript. Reduced-motion preferences disable movement, transitions, skeleton pulsing, and smooth scrolling while preserving all status text and selected states.
+
+## Implementation map
+
+- src/components/ui/workspace.css: shared travel surfaces, tokens, responsive layout, loading, and motion.
+- src/features/trips/workspace-live.css: real workspace navigation and chat composition.
+- src/components/ui/ThaiDateInput.tsx and thai-date.css: Thai calendar and ISO form values.
+- src/components/ui/MonthPicker.tsx: Thai month navigation.
+- src/app/loading.tsx: route-level workspace skeleton.
+
+DESIGN.md is the visual source of truth; the older .impeccable/design.json sidecar is not authoritative for this direction.
+
+## Supporting tokens
+
+Compact calendar days use 8px corners. Metadata and weekday labels use .8rem; supporting copy uses .9rem. Form control borders use #c6d5d0, strong text on the soft primary surface uses #25645b, and skeleton fills use #e5ebe5. Preserve semantic success, pending, and danger colors already used by the voting UI rather than mapping every status to teal.
+
+The browser-only mockup shares the Thai date component and visual primitives, but retains its independent local sample state. No authentication or real mutation is added to it.
