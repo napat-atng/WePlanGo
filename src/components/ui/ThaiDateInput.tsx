@@ -26,6 +26,7 @@ export function ThaiDateInput({ id, name, type = "date", value, defaultValue = "
   const generatedId = useId();
   const root = useRef<HTMLSpanElement>(null);
   const displayInput = useRef<HTMLInputElement>(null);
+  const validationInput = useRef<HTMLInputElement>(null);
   const [draft, setDraft] = useState(defaultValue);
   const current = value ?? draft;
   const [open, setOpen] = useState(false);
@@ -36,7 +37,7 @@ export function ThaiDateInput({ id, name, type = "date", value, defaultValue = "
   const offset = (new Date(Date.UTC(year, month - 1, 1)).getUTCDay() + 6) % 7;
   const display = current ? formatThaiDate(current) : "";
   useEffect(() => {
-    displayInput.current?.setCustomValidity(current && ((min && current < min) || (max && current > max))
+    validationInput.current?.setCustomValidity(current && ((min && current < min) || (max && current > max))
       ? "กรุณาเลือกวันที่และเวลาในช่วงที่กำหนด" : "");
   }, [current, min, max]);
 
@@ -50,13 +51,22 @@ export function ThaiDateInput({ id, name, type = "date", value, defaultValue = "
   }} onKeyDown={(event) => {
     if (event.key === "Escape") { event.stopPropagation(); setOpen(false); displayInput.current?.focus(); }
   }}>
-    <input type="hidden" name={name} value={current} />
+    <input type="hidden" name={name} value={current} disabled={disabled} />
     <input ref={displayInput} id={id ?? generatedId} className="thai-date-display" type="text" value={display}
-      placeholder="เลือกวัน เดือน ปี" required={required} disabled={disabled}
+      placeholder="เลือกวัน เดือน ปี" readOnly inputMode="none" aria-required={required} disabled={disabled}
       role="combobox" aria-autocomplete="none" aria-readonly="true" aria-haspopup="dialog" aria-expanded={open} aria-controls={open ? `${generatedId}-calendar` : undefined}
-      onChange={() => {}} onClick={() => { setView(initialMonth); setOpen(!open); }}
+      onClick={() => { setView(initialMonth); setOpen(!open); }}
       onKeyDown={(event) => { if (["Enter", " ", "ArrowDown"].includes(event.key)) { event.preventDefault(); setView(initialMonth); setOpen(true); } }}
-      onInvalid={() => setOpen(true)} />
+      />
+    {/* Read-only controls do not participate in native required validation. */}
+    <input ref={validationInput} className="thai-date-validation" type="text" value={current}
+      required={required} disabled={disabled} tabIndex={-1} aria-hidden="true" onChange={() => {}}
+      onInvalid={(event) => {
+        event.preventDefault();
+        setView(initialMonth);
+        setOpen(true);
+        displayInput.current?.focus();
+      }} />
     {type === "datetime-local" && <ThaiTimeInput required={required} disabled={disabled}
       value={current.slice(11, 16)} onChange={(time) => {
         update(`${current.slice(0, 10) || view + "-01"}T${time}`);
