@@ -1,6 +1,9 @@
 .thai-date-field { position: relative; display: flex; flex-wrap: wrap; gap: 8px; min-width: 0; width: 100%; font-variant-numeric: tabular-nums; }
 .thai-date-field > .thai-date-display { flex: 1 1 180px; cursor: pointer; min-width: 0; }
-.thai-date-field > input[type="time"] { flex: 0 1 130px; }
+.thai-time-field { display: inline-flex; align-items: center; gap: 6px; flex: 0 1 210px; min-width: 0; }
+.thai-time-field select { width: 80px; min-width: 0; min-height: 44px; padding: 8px; border: 1px solid #c6d5d0; border-radius: 10px; background: #fff; color: #243b3b; font: inherit; font-variant-numeric: tabular-nums; }
+.demo-app .thai-time-field select { width: 80px; }
+.thai-time-unit { white-space: nowrap; }
 .thai-date-popover { position: absolute; top: calc(100% + 8px); left: 0; z-index: 50; display: block; width: min(320px, 85vw); padding: 16px; border-radius: 16px; background: #fff; color: #243b3b; box-shadow: 0 12px 42px #243b3b26; }
 .thai-date-heading { display: flex; gap: 8px; margin-bottom: 12px; }
 .thai-date-heading select { min-width: 0; flex: 1; }

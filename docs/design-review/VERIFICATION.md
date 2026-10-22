@@ -12,3 +12,7 @@ Checks passed:
 Screenshots in this folder are local development captures. workspace-* screenshots show sample prototype data; calendar-mobile.png shows an isolated component test. The temporary component-preview route was removed after checking. Authenticated two-account invite/vote/confirm/RSVP integration was not rerun for these presentation changes.
 
 The design detector completed and reported advisory mismatches against legacy literal colors, sizes, and the old sidecar. DESIGN.md is the updated visual authority.
+
+## 24-hour time selector follow-up
+
+Replaced the browser-native time input with explicit ThaiTimeInput hour (00–23) and minute (00–59) selects. Chrome checks passed with both en-US and th-TH browser locales for 00:00, 12:00, 14:30, and 23:59; hidden ISO datetime values stayed correct. Desktop and 390px mobile screenshots are time-en-US.png and time-th-TH.png. Lint, production build, and all 24 automated tests passed.

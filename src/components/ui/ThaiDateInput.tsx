@@ -2,6 +2,7 @@
 
 import { useEffect, useId, useRef, useState } from "react";
 import { formatThaiDate } from "@/lib/thai-date";
+import { ThaiTimeInput } from "./ThaiTimeInput";
 
 const months = Array.from({ length: 12 }, (_, month) =>
   new Intl.DateTimeFormat("th-TH", { month: "long", timeZone: "UTC" }).format(new Date(Date.UTC(2026, month, 1))),
@@ -56,9 +57,9 @@ export function ThaiDateInput({ id, name, type = "date", value, defaultValue = "
       onChange={() => {}} onClick={() => { setView(initialMonth); setOpen(!open); }}
       onKeyDown={(event) => { if (["Enter", " ", "ArrowDown"].includes(event.key)) { event.preventDefault(); setView(initialMonth); setOpen(true); } }}
       onInvalid={() => setOpen(true)} />
-    {type === "datetime-local" && <input aria-label="เวลา (24 ชั่วโมง)" type="time" required={required} disabled={disabled}
-      value={current.slice(11, 16)} onChange={(event) => {
-        if (event.target.value) update(`${current.slice(0, 10) || view + "-01"}T${event.target.value}`);
+    {type === "datetime-local" && <ThaiTimeInput required={required} disabled={disabled}
+      value={current.slice(11, 16)} onChange={(time) => {
+        update(`${current.slice(0, 10) || view + "-01"}T${time}`);
       }} />}
     {open && <span id={`${generatedId}-calendar`} className="thai-date-popover" role="dialog" aria-label="เลือกวันที่ภาษาไทย">
       <span className="thai-date-heading">

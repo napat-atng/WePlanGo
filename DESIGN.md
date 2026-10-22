@@ -101,3 +101,7 @@ DESIGN.md is the visual source of truth; the older .impeccable/design.json sidec
 Compact calendar days use 8px corners. Metadata and weekday labels use .8rem; supporting copy uses .9rem. Form control borders use #c6d5d0, strong text on the soft primary surface uses #25645b, and skeleton fills use #e5ebe5. Preserve semantic success, pending, and danger colors already used by the voting UI rather than mapping every status to teal.
 
 The browser-only mockup shares the Thai date component and visual primitives, but retains its independent local sample state. No authentication or real mutation is added to it.
+
+### Time selector implementation
+
+ThaiTimeInput uses explicit hour options 00–23 and minute options 00–59, with Thai accessible labels and the suffix น. It does not use the browser-native time input, whose visible clock may follow an AM/PM operating-system locale. ThaiDateInput continues to submit the combined ISO local datetime value.
