@@ -857,8 +857,7 @@ export default function MockupApp() {
                     placeholder="เช่น ทะเลวันหยุดกับเพื่อน"
                   />
                 </label>
-                <details className="demo-optional">
-                  <summary>รายละเอียดเพิ่มเติม</summary>
+                <div className="demo-create-fields">
                   <label>
                     รายละเอียด
                     <textarea
@@ -896,7 +895,7 @@ export default function MockupApp() {
                       required
                     />
                   </label>
-                </details>
+                </div>
                 <div className="demo-actions">
                   <button type="button" onClick={() => setView("home")}>
                     ยกเลิก

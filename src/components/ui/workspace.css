@@ -1521,3 +1521,5 @@
   .loading-workspace { width: calc(100% - 32px); margin-block: 24px; }
   .demo-tabs button { padding-inline: 4px; }
 }
+
+.demo-create-fields { display: grid; gap: 18px; min-width: 0; }

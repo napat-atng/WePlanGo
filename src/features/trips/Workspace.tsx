@@ -590,8 +590,7 @@ export default function Workspace({
                   placeholder="เช่น วันหยุดกับเพื่อน"
                 />
               </label>
-              <details className="demo-optional">
-                <summary>รายละเอียดเพิ่มเติม</summary>
+              <div className="demo-create-fields">
                 <label>
                   รายละเอียด
                   <textarea name="description" maxLength={1000} />
@@ -634,7 +633,7 @@ export default function Workspace({
                     required
                   />
                 </label>
-              </details>
+              </div>
               <div className="demo-actions">
                 <Link href="/trips" className="workspace-button">
                   ยกเลิก
